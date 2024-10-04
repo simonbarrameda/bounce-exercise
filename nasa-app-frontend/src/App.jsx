@@ -26,7 +26,7 @@ function App() {
       setIsLoading(true)
       const host = import.meta.env.VITE_API_URL || 'localhost:3000'
       const dateQuery = selectedDate.toISOString().split('T')[0];
-      const url = `http://${host}/v1/nasa/apod?date=${dateQuery}`
+      const url = `${host}/v1/nasa/apod?date=${dateQuery}`
       const jwtSecret = import.meta.env.VITE_JWT_SECRET
       const jwtPayload = { type: 'access' }
       const authToken = jwt(jwtPayload, jwtSecret)
