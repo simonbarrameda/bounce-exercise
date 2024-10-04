@@ -1,0 +1,39 @@
+services:
+  # Node.js Backend Service
+  backend:
+    build:
+      context: ./nasa-app-backend 
+      dockerfile: Dockerfile
+    container_name: bounce-exercise-backend
+    ports:
+      - "3001:3001"
+    env_file:
+      - ./nasa-app-backend/.env
+    networks:
+      - app-network
+
+  # React Frontend Service
+  frontend:
+    build:
+      context: ./nasa-app-frontend
+      dockerfile: Dockerfile
+    container_name: bounce-exercise-frontend
+    env_file:
+      - ./nasa-app-frontend/.env
+    ports:
+      - "5173:5173"
+    networks:
+      - app-network
+    depends_on:
+      - backend
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
